@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #weather-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="weather-container">
+        <h2>Current Weather</h2>
+        <p id="weather-info">Loading...</p>
+    </div>
+
+    <script>
+        const apiKey = 'YOUR_API_KEY'; // Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
+        const apiUrl = https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}&units=metric;
+
+        const weatherInfo = document.getElementById('weather-info');
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const cityName = data.name;
+                const temperature = data.main.temp;
+                const weatherDescription = data.weather[0].description;
+
+                weatherInfo.innerHTML = `
+                    City: ${cityName}<br>
+                    Temperature: ${temperature}°C<br>
+                    Weather: ${weatherDescription}
+                `;
+            })
+            .catch(error => {
+                console.error('Error fetching weather data:', error);
+                weatherInfo.innerHTML = 'Error fetching weather data';
+            });
+    </script>
+</body>
+</html>
